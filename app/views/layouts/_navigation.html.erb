@@ -1,0 +1,19 @@
+<%= link_to "User Links", root_path, class: "item flex items-center" %>
+
+<div class="">
+  <div class="flex space-x-4">
+  <div class="cursor-pointer">
+    Account <i class="dropdown icon"></i>
+  </div>
+  <%# <% if logged_in? %>
+    <%= link_to "Logout", '#', method: :delete, class: "cursor-pointer" %>
+  <%# <% else %> 
+    <%= link_to "Log in", '#', class: "cursor-pointer" %>
+  <%# <% end %> 
+  </div>
+  <%# <% if !logged_in? %>
+    <%# <div class="cursor-pointer"> %>
+      <%# <%= link_to "Log in", '#', class: "ui primary button" %>
+    <%# </div> %>
+  <%# <% end %>
+</div>

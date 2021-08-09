@@ -1,0 +1,89 @@
+# {
+  #   allLinks {
+  #     id
+  #     url
+  #     description
+  #   }
+  # }
+  
+  # mutation {
+  #   createLink(
+  #     url: "https://www.link.ca",
+  #     description: "link five",
+  #   ) {
+  #     id
+  #     url
+  #     description
+  #     postedBy {
+  #       name
+  #     }
+  #   }
+  # }
+  
+  # mutation {
+  #   createUser(
+  #     name:"Mathius", 
+  #     authProvider: {
+  #       credentials: {
+  #         email:"c@j.com", 
+  #         password: "123456"
+  #       }
+  #     }
+  #   ) {
+  #     email
+      
+  #   }
+  # }
+  
+  
+  # mutation {
+  #   signinUser(
+  #       credentials: {
+  #         email:"c@j.com", 
+  #         password: "123456"
+  #       }
+  #     ) {
+  # 			token
+  #     user {
+  #       name
+  #     }
+  #   }
+  # }
+  
+  
+  # mutation {
+  #   createVote(linkId: "TGluay02") {
+  #     link {
+  #       description
+  #     }
+  #     user {
+  #       name
+  #     }
+  #   }
+  # }
+  
+  # query {
+  #   allLinks {
+  #     id
+  #     postedBy {
+  #       name
+  #       votes {
+  #         link {
+  #           description
+  #         }
+  #       }
+  #     }
+  #   }
+  # }
+  
+  query {
+    allLinks {
+      id
+      description
+      votes {
+        user {
+          email
+        }
+      }
+    }
+  }

@@ -1,0 +1,11 @@
+<% for link in @data do %>
+<%= print @data %>
+  <div class="item">
+    <div class="content">
+      <a class="header">
+        <%= link.description %>
+      </a>
+      <p class="description text-2xl">- posted by: <%= link.posted_by.name %></p>
+    </div>
+  </div>
+<% end %>
