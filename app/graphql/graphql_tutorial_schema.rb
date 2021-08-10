@@ -9,6 +9,14 @@ class GraphqlTutorialSchema < GraphQL::Schema
   # Add built-in connections for pagination
   use GraphQL::Pagination::Connections
 
+  use GraphqlDevise::SchemaPlugin.new(
+    query:            Types::QueryType,
+    mutation:         Types::MutationType,
+    resource_loaders: [
+      GraphqlDevise::ResourceLoader.new(User, only: [:login, :confirm_registration_with_token, :logout, :register])
+    ]
+  )
+
   def self.resolve_type(_type, object, _ctx)
     type_class = "::Types::#{object.class}Type".safe_constantize
 
