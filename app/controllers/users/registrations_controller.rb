@@ -1,44 +1,18 @@
 # frozen_string_literal: true
 
-class RegistrationsController < Devise::RegistrationsController
-  Client = Graphlient::Client.new('http://localhost:3000/graphql',
-    # headers: {
-    #   'Authorization' => 'Bearer 123'
-    # },
-    http_options: {
-      read_timeout: 20,
-      write_timeout: 30
-    }
-  )
+class Users::RegistrationsController < Devise::RegistrationsController
+  # before_action :configure_sign_up_params, only: [:create]
+  # before_action :configure_account_update_params, only: [:update]
 
-  Response = Client.query <<~GRAPHQL
-    mutation {
-      createUser(name: "'test'", authProvider: {
-          credentials: {
-            email: "'test@test.ca'", 
-            password: "'password'"
-          }
-        }
-      )
-    }
-  GRAPHQL
+  # GET /resource/sign_up
+  # def new
+  #   super
+  # end
 
   # POST /resource
-  def create   
-    email = params[:session][:email]
-    password = params[:session][:password]
-
-
-
-    puts Response.data
-
-    respond_to do |format|
-      format.html {
-        redirect_to "/"
-      }
-    end
-
-  end
+  # def create
+  #   super
+  # end
 
   # GET /resource/edit
   # def edit
@@ -68,7 +42,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
-  #   params.require(:session).permit(:email, :password)
+  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
   # end
 
   # If you have extra params to permit, append them to the sanitizer.

@@ -13,8 +13,9 @@ class GraphqlTutorialSchema < GraphQL::Schema
     query:            Types::QueryType,
     mutation:         Types::MutationType,
     resource_loaders: [
-      GraphqlDevise::ResourceLoader.new(User, only: [:login, :confirm_registration_with_token, :logout, :register])
-    ]
+      GraphqlDevise::ResourceLoader.new(User, only: [:login, :confirm_registration_with_token, :logout, :register], authenticate_default: false)
+    ],
+    authenticate_default: false
   )
 
   def self.resolve_type(_type, object, _ctx)

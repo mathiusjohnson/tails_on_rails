@@ -299,6 +299,7 @@ DEPENDENCIES
   graphiql-rails (= 1.5.0)
   graphlient
   graphql (= 1.11.6)
+  graphql-client
   graphql-query-resolver
   graphql-rails_logger
   graphql_devise

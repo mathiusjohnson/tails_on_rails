@@ -26,6 +26,7 @@ gem 'graphql-rails_logger'
 gem 'graphlient'
 gem 'graphql_devise'
 gem 'omniauth'
+gem "graphql-client"
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
