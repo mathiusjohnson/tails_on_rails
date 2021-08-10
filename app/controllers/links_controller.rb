@@ -9,7 +9,7 @@ class LinksController < ApplicationController
     }
   )
 
-  Response = Client.query <<~GRAPHQL
+  Links = Client.query <<~GRAPHQL
     query {
       allLinks {
         id
@@ -25,10 +25,13 @@ class LinksController < ApplicationController
       }
     }
   GRAPHQL
-
-
+  
   def index
-    @data = Response.data.all_links
+    @data = Links.data.all_links
+  end
+
+  def show
+    @link = Links.find(params[:id])
   end
 
 end
