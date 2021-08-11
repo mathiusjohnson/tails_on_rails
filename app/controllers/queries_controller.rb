@@ -17,7 +17,7 @@ def QueriesController < ApplicationController
           id
           description
           postedBy {
-            name
+            firstName
           }
           votes {
             user {
