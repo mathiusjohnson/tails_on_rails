@@ -19,24 +19,18 @@ module TailsOnRails
     # config.eager_load_paths << Rails.root.join("extras")
   end
 
+  Rails.autoloaders.main.ignore(Rails.root.join('app/services'))
 
-  # HTTPAdapter = GraphQL::Client::HTTP.new("http://localhost:3000/graphiql") do
-  #   # def headers(context)
-  #   #   unless token = context[:access_token] || Application.secrets.github_access_token
-  #   #     # $ GITHUB_ACCESS_TOKEN=abc123 bin/rails server
-  #   #     #   https://help.github.com/articles/creating-an-access-token-for-command-line-use
-  #   #     fail "Missing GitHub access token"
-  #   #   end
 
-  #   #   {
-  #   #     "Authorization" => "Bearer #{token}"
-  #   #   }
-  #   # end
-  # end
-
-  # Client = GraphQL::Client.new(
-  #   schema: Application.root.join("db/schema.json").to_s,
-  #   execute: HTTPAdapter
-  # )
-  # Application.config.graphql.client = Client
+  Client = Graphlient::Client.new('http://localhost:3000/graphql',
+    # headers: {
+    #   'Authorization' => 'Bearer 123'
+    # },
+    http_options: {
+      read_timeout: 20,
+      write_timeout: 30
+    },
+    schema_path: 'db/schema.json'
+  )
+  
 end
