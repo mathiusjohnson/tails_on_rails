@@ -24,7 +24,6 @@ gem 'search_object_graphql', '0.3.1'
 gem 'graphql-query-resolver'
 gem 'graphql-rails_logger'
 gem 'graphlient'
-gem 'graphql_devise'
 gem 'omniauth'
 gem "graphql-client"
 
