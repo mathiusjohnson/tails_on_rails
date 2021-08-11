@@ -1,11 +1,14 @@
 class GraphqlController < ApplicationController
   def execute
-    result = GraphqlTutorialSchema.execute(
-      query, 
-      variables: variables, 
-      context: context, 
-      operation_name: operation_name
-    )
+    variables = ensure_hash(params[:variables])
+    query = params[:query]
+    operation_name = params[:operationName]
+    context = {
+      # we need to provide session and current user
+      session: session,
+      current_user: current_user
+    }
+    result = GraphqlTutorialSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
