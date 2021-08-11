@@ -1,24 +1,28 @@
 class LinksController < ApplicationController
 
-  Links = TailsOnRails::Client.query <<~GRAPHQL
-    query {
-      allLinks {
-        id
-        description
-        postedBy {
-          firstName
-        }
-        votes {
-          user {
-            email
+  
+  def index
+    query_string = <<~GQL
+      query {
+        allLinks {
+          id
+          description
+          postedBy {
+            firstName
+          }
+          votes {
+            user {
+              email
+            }
           }
         }
       }
-    }
-  GRAPHQL
-  
-  def index
-    @data = Links.data.all_links
+    GQL
+    
+    response = GraphqlTutorialSchema.execute(query: query_string)
+    # puts "current user: " + current_user.to_s
+    byebug
+    @data = response.to_h["data"]["allLinks"]
   end
 
   def show
