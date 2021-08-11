@@ -1,62 +1,41 @@
 # frozen_string_literal: true
 
-class RegistrationsController < ApplicationController
+class RegistrationsController < GraphqlController
 
-
-
-  
-
-  # POST /resource
   def create   
-    email = params[:session][:email].to_s
-    password = params[:session][:password].to_s
+    @user = User.new(user_params)
 
-    query_string = <<~GQL
-      mutation {
-        createUser(
-          firstName: "mathius", 
-          authProvider: {
-            credentials: {
-              email: "#{email}", 
-              password: "#{password}"
+
+    email = @user[:email]
+    password = @user[:password_digest]
+
+    if email && password != nil
+
+      query_string = <<~GQL
+        mutation {
+          createUser(
+            firstName: "mathius", 
+            authProvider: {
+              credentials: {
+                email: "#{email}", 
+                password: "#{password}"
+              }
             }
+          ) {
+            email
+            
           }
-        ) {
-          email
-          
         }
-      }
-    GQL
+      GQL
 
-    # query_string = <<~GQL
-    #   mutation($first_name: string, $auth_provider: AuthProviderSignupData) {
-    #     createUser(
-    #       firstName: $first_name, 
-    #       authProvider: {
-    #         $auth_provider
-    #       }
-    #     ) {
-    #       email 
-    #     }
-    #   }
-    # GQL
+      response = GraphqlTutorialSchema.execute(query: query_string)
 
-    # variables = {
-    # "firstName" => email,
-    # "authParams" => {
-    #   "credentials" => {
-    #     "email" => email,
-    #     "password" => password
-    #   }
-    # },
-    # }
+    end
 
+    session[:user_id] = @user.id
+    flash[:notice] = "Welcome to the Alpha Blog #{@user.email}, you have successfully signed up"
 
-    response = GraphqlTutorialSchema.execute(query: query_string)
-
-    byebug
     respond_to do |format|
-      format.json { render :json => response }
       format.html do
         redirect_to '/'
       end
@@ -64,28 +43,13 @@ class RegistrationsController < ApplicationController
 
   end
 
+  private
+  def user_params
+    params.require(:session).permit(:email, :password)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
 end
-
-
-# query_string = <<~GQL
-# mutation($first_name: string, $auth_provider: AuthProviderSignupData) {
-#   createUser(
-#     firstName: $first_name, 
-#     authProvider: {
-#       $auth_provider
-#     }
-#   ) {
-#     email 
-#   }
-# }
-# GQL
-
-# variables = {
-# "firstName" => email,
-# "authParams" => {
-#   "credentials" => {
-#     "email" => email,
-#     "password" => password
-#   }
-# },
-# }
